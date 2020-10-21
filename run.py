@@ -124,22 +124,15 @@ async def on_message(message):
     if message.content == "!올인":
         ID = str(message.author.id)
         if not ID in idA or moneyA[idA.index(ID)] <= 0: #만약 돈이 부족하면
-            embed = discord.Embed(title='', description='돈이 부족합니다.', color=0xFF0000)
+            embed = discord.Embed(title='거지신가요?', description='돈이 부족합니다.', color=0xFF0000)
             await message.channel.send(embed=embed)
             raise ValueError
         give = random.randrange(2,10)
-        count = await message.channel.send('**{}님'.format(message.author.name) + "의 확률을 계산중에 있어요, 잠시만 기다려주세요.")
-        for i in range(0,2):
-            await count.edit(content = ment[0])
-            await asyncio.sleep(0)
-            await count.edit(content = ment[1])
-            await asyncio.sleep(0)
-            await count.edit(content = ment[2])
-            await asyncio.sleep(0)
+       
         #await count.edit(content = '만약 성공하면 건 돈의 '+str(give)+"배 를 얻어요")
         await asyncio.sleep(0)
         if give % 2 == 0:
-            moneyA[idA.index(ID)]*= give
+            moneyA[idA.index(ID)]* give
             await asyncio.sleep(0)
             money13 = 0;
             money13 = moneyA[idA.index(ID)]
