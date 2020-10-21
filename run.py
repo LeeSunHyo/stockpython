@@ -29,7 +29,7 @@ f.close()
 async def on_ready(): #봇이 켜지면
     print("봇 아이디: ", client.user.id)
     print("봇 준비 완료")
-    game = discord.Game("현재 원금 회수 중")
+    game = discord.Game("4금융 | 투자증권")
     await client.change_presence(status=discord.Status.online, activity=game)
 
 @client.event
@@ -73,24 +73,24 @@ async def on_message(message):
             raise ValueError
         msg[1] = int(msg[1])
         if not ID in idA or moneyA[idA.index(ID)] - int(msg[1]) < 0: #등록된 ID가 아니거나 돈이 부족하면
-            embed = discord.Embed(title='경고!', description='아쉽네요, 보유하신 잔고가 부족하거나 저희 회원이 아니에요.', color=0xFF0000)
+            embed = discord.Embed(title='혹시 거지신가요?', description='아쉽네요, 보유하신 잔고가 부족하거나 저희 회원이 아니에요.', color=0xFF0000)
             await message.channel.send(embed=embed)
             raise ValueError #탈출
         moneyA[idA.index(ID)] -= msg[1]
-        give = random.randrange(1,11)
-
+        give = random.randrange(1,5)
 
         await asyncio.sleep(0)
         if give % 2 == 0:
-            moneyA[idA.index(ID)] * give
+            #moneyA[idA.index(ID)] *= give
+
             await asyncio.sleep(0)
-            rank2, rankB = "", []
-            money11 = 0;
             money11 = moneyA[idA.index(ID)]
             msg22 = '**{}님 '.format(message.author.name)+ str(give) + f'배 배팅에 성공하셨습니다. \n\n 잔고: {money11:,}원**'
+            moneyA[idA.index(ID)] += give * msg[1]
             #await message.channel.send('{}님'.format(message.author.name)+ f' 축하드려요, 배팅에 성공하셨습니다. \n\n 잔고: {money11:,}원')
             embed = discord.Embed(title='축하드립니다!', description=msg22, color=0x008B8B)
             await message.channel.send(embed=embed)
+            raise ValueError
 
         elif give % 2 != 0:
             money11 = moneyA[idA.index(ID)]
@@ -98,6 +98,7 @@ async def on_message(message):
             # await message.channel.send('{}님'.format(message.author.name)+ f' 축하드려요, 배팅에 성공하셨습니다. \n\n 잔고: {money11:,}원')
             embed = discord.Embed(title='아쉬워요.', description=msg22, color=0xDAA520)
             await message.channel.send(embed=embed)
+            raise ValueError
 
         f = open("UserData.txt", "w") #저장
         for i in range(0,len(idA),1):
@@ -132,18 +133,17 @@ async def on_message(message):
         #await count.edit(content = '만약 성공하면 건 돈의 '+str(give)+"배 를 얻어요")
         await asyncio.sleep(0)
         if give % 2 == 0:
-            moneyA[idA.index(ID)]* give
+            moneyA[idA.index(ID)]*= give*msg[1]
             await asyncio.sleep(0)
             money13 = 0;
             money13 = moneyA[idA.index(ID)]
 
             msg33 = '**{}님 '.format(message.author.name) + str(give) + f'배 올인을 성공하셨습니다. \n\n 잔고: {money13:,}원**'
+            moneyA[idA.index(ID)] += give * msg[1]
             # await message.channel.send('{}님'.format(message.author.name)+ f' 축하드려요, 배팅에 성공하셨습니다. \n\n 잔고: {money11:,}원')
             embed = discord.Embed(title='축하드립니다!', description=msg33, color=0x008B8B)
             await message.channel.send(embed=embed)
-
-            #0xDAA520
-
+            raise ValueError
 
         elif give % 2 != 0:
             moneyA[idA.index(ID)] = 0
@@ -155,6 +155,7 @@ async def on_message(message):
             # await message.channel.send('{}님'.format(message.author.name)+ f' 축하드려요, 배팅에 성공하셨습니다. \n\n 잔고: {money11:,}원')
             embed = discord.Embed(title='아쉬워요.', description=msg33, color=0xDAA520)
             await message.channel.send(embed=embed)
+            raise ValueError
 
         f = open("UserData.txt", "w") #저장
         for i in range(0,len(idA),1):
@@ -174,4 +175,67 @@ async def on_message(message):
         embed = discord.Embed(title='서버 랭킹', description=rank, color=0xd8aa2d)
         await message.channel.send(embed=embed)
 
-client.run(os.environ['token'])
+    if message.content == "!저축은행 대출":
+        embed3 = discord.Embed(title="선효투자증권 대출 신청 안내", description="저희 선효투자증권은 저렴한 이자율과 만족스러운 승인율로 고객님꼐 다가갑니다.",
+                              color=0xcf0707)
+        embed3.add_field(name="이자율", value="45%", inline=True)
+        embed3.add_field(name="최대 대출신청 가능 금액", value="5,000,000", inline=True)
+        embed3.add_field(name="대출문의", value="@장티푸스환자/21", inline=True)
+        embed3.add_field(name="대출신청", value="대출신청은 '!저축은행 대출신청 <금액>으로 가능합니다. ", inline=True)
+        embed3.add_field(name="상환기간", value="최대 24시간으로 연장 불가능합니다.", inline=True)
+        embed3.set_footer(text="* 연체시에는 상환시 까지 디스코드에서 대화, 보이스를 즐길 수 없도록 차단됩니다. 상환 시 즉시 해제됩니다.")
+        await message.channel.send(embed=embed3)
+
+    if message.content == "!저축은행 대출신청":
+        embed = discord.Embed(title="선효투자증권 대출 신청 결과안내", description="저희 선효투자증권의 고객이 되어주셔서 대단히 감사드립니다.", color=0xcf0707)
+        embed.add_field(name="적용 이자율", value="45%", inline=True)
+        embed.add_field(name="대출신청금액", value="5,000,000", inline=True)
+        embed.add_field(name="상환기간", value="24시간", inline=True)
+        embed.add_field(name="상환금액", value="7,250,000원 * 이자포함", inline=True)
+        embed.add_field(name="대출결과", value="지급이 완료되었습니다. 감사합니다.", inline=True)
+        embed.set_footer(text="* 연체시에는 상환시 까지 디스코드에서 대화, 보이스를 즐길 수 없도록 차단됩니다. 상환 시 즉시 해제됩니다.")
+        await message.channel.send(embed=embed)
+
+        ID = str(message.author.id)
+        TIME = int(time.time())
+        if ID in idA:  # 만약 등록된 ID라면
+            if TIME - timeA[idA.index(ID)] < 1:  # 1시간이 안 지났을 때
+                embed2 = discord.Embed(title='어머, 상환이나 빨리 해주세요.', description='아직 진행중인 대출건이 존재합니다. \n\n 미 상환시 **채팅, 보이스 전부 금지 조치됩니다.**', color=0xFF0000)
+                await message.channel.send(embed=embed2)
+                raise ValueError  # 탈출
+            elif TIME - timeA[idA.index(ID)] >= 86400:  # 1시간이 지났을 때
+                timeA[idA.index(ID)] = int(time.time())
+        give = random.randrange(1, 2) * random.randrange(5000000, 5000001)  # 줄 돈
+        if ID in idA:
+            moneyA[idA.index(ID)] += give
+            f = open("UserData.txt", "w")  # 저장
+            for i in range(0, len(idA), 1):
+                f.write(str(idA[i]) + "," + str(moneyA[i]) + "," + str(timeA[i]) + "\n")
+            f.close()
+        elif not ID in idA:
+            idA.append(ID)
+            moneyA.append(give)
+            timeA.append(int(time.time()))
+            f = open("UserData.txt", "w")  # 저장
+            for i in range(0, len(idA), 1):
+                f.write(str(idA[i]) + "," + str(moneyA[i]) + "," + str(timeA[i]) + "\n")
+            f.close()
+
+            raise ValueError  # 탈출
+
+        if message.content == "!주식":
+            embed5 = discord.Embed(title="선효투자증권 주식 현황", description="선효투자증권의 주식 현황판을 보여드립니다. \n\n 5분마다 갱신됩니다.",
+                                  color=0x3bb9d8)
+            embed5.add_field(name="선효대부", value="3,000원", inline=False)
+            embed5.add_field(name="선효투자증권", value="150,000원", inline=False)
+            embed5.add_field(name="급장흥신소", value="1,300원", inline=False)
+            embed5.add_field(name="급장인신매매소", value="25,000원", inline=False)
+            embed5.set_footer(text="* 연체시에는 상환시 까지 디스코드에서 대화, 보이스를 즐길 수 없도록 차단됩니다. 상환 시 즉시 해제됩니다.")
+            await message.channel.send('',embed=embed5)
+
+
+
+
+
+
+client.run('NzY4NDYwNDMyMzY4OTkyMjg2.X5AyjA.gf3McbpYJMMBrULrJ3hPQ4I76Rg')
