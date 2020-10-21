@@ -128,7 +128,7 @@ async def on_message(message):
             await message.channel.send(embed=embed)
             raise ValueError
         give = random.randrange(2,10)
-        count = await message.channel.send("님의 확률을 계산중에 있어요, 잠시만 기다려주세요.")
+        count = await message.channel.send('**{}님'.format(message.author.name) + "의 확률을 계산중에 있어요, 잠시만 기다려주세요.")
         for i in range(0,2):
             await count.edit(content = ment[0])
             await asyncio.sleep(0)
