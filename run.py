@@ -240,4 +240,4 @@ async def on_message(message):
 
 
 
-client.run('NzY4NDYwNDMyMzY4OTkyMjg2.X5AyjA.StRXzi_HGUEmxwaOB2gMxFLrOvw')
+client.run(os.environ['token'])
