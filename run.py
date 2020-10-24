@@ -42,7 +42,7 @@ async def on_message(message):
             if TIME - timeA[idA.index(ID)] < 1: #1시간이 안 지났을 때
                 embed = discord.Embed(title='욕심이 너무 과해요.', description='1분마다 지원금을 받을 수 있습니다.', color=0xFF0000)
                 await message.channel.send(embed=embed)
-                #raise ValueError #탈출
+                raise ValueError #탈출
             elif TIME - timeA[idA.index(ID)] >= 1: #1시간이 지났을 때
                 timeA[idA.index(ID)] = int(time.time())
         give = random.randrange(1,2)*random.randrange(1000,5000) # 줄 돈
@@ -71,12 +71,12 @@ async def on_message(message):
         if msg[1].isdecimal() == False: #만약 숫자가 아니라면
             embed = discord.Embed(title='경고!', description='숫자만 입력해 주세요!', color=0xFF0000)
             await message.channel.send(embed=embed)
-            #raise ValueError
+            raise ValueError
         msg[1] = int(msg[1])
         if not ID in idA or moneyA[idA.index(ID)] - int(msg[1]) < 0: #등록된 ID가 아니거나 돈이 부족하면
             embed = discord.Embed(title='혹시 거지신가요?', description='아쉽네요, 보유하신 잔고가 부족하거나 저희 회원이 아니에요.', color=0xFF0000)
             await message.channel.send(embed=embed)
-            #raise ValueError #탈출
+            raise ValueError #탈출
         moneyA[idA.index(ID)] -= msg[1]
         give = random.randrange(1,5)
 
@@ -91,7 +91,7 @@ async def on_message(message):
             #await message.channel.send('{}님'.format(message.author.name)+ f' 축하드려요, 배팅에 성공하셨습니다. \n\n 잔고: {money11:,}원')
             embed = discord.Embed(title='축하드립니다!', description=msg22, color=0x008B8B)
             await message.channel.send(embed=embed)
-            #raise ValueError
+            raise ValueError
 
         elif give % 2 != 0:
             money78 = moneyA[idA.index(ID)]
@@ -99,7 +99,7 @@ async def on_message(message):
             # await message.channel.send('{}님'.format(message.author.name)+ f' 축하드려요, 배팅에 성공하셨습니다. \n\n 잔고: {money11:,}원')
             embed = discord.Embed(title='아쉬워요.', description=msg22, color=0xDAA520)
             await message.channel.send(embed=embed)
-            #raise ValueError
+            raise ValueError
 
         f = open("UserData.txt", "w") #저장
         for i in range(0,len(idA),1):
@@ -128,7 +128,7 @@ async def on_message(message):
         if not ID in idA or moneyA[idA.index(ID)] <= 0: #만약 돈이 부족하면
             embed = discord.Embed(title='거지신가요?', description='돈이 부족합니다.', color=0xFF0000)
             await message.channel.send(embed=embed)
-            #raise ValueError
+            raise ValueError
         give = random.randrange(2,10)
        
         #await count.edit(content = '만약 성공하면 건 돈의 '+str(give)+"배 를 얻어요")
@@ -142,7 +142,7 @@ async def on_message(message):
             # await message.channel.send('{}님'.format(message.author.name)+ f' 축하드려요, 배팅에 성공하셨습니다. \n\n 잔고: {money11:,}원')
             embed = discord.Embed(title='축하드립니다!', description=msg33, color=0x008B8B)
             await message.channel.send(embed=embed)
-            #raise ValueError
+            raise ValueError
 
         elif give % 2 != 0:
             moneyA[idA.index(ID)] = 0
@@ -154,7 +154,7 @@ async def on_message(message):
             # await message.channel.send('{}님'.format(message.author.name)+ f' 축하드려요, 배팅에 성공하셨습니다. \n\n 잔고: {money11:,}원')
             embed = discord.Embed(title='아쉬워요.', description=msg33, color=0xDAA520)
             await message.channel.send(embed=embed)
-            #raise ValueError
+            raise ValueError
 
         f = open("UserData.txt", "w") #저장
         for i in range(0,len(idA),1):
@@ -236,7 +236,7 @@ async def on_message(message):
                 f.write(str(idA[i]) + "," + str(moneyA[i]) + "," + str(timeA[i]) + "\n")
             f.close()
 
-            #raise ValueError  # 탈출
+            raise ValueError  # 탈출
 
 
 
